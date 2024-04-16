@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kết quả tìm kiếm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .product-item {
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        
+        .product-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        
+        .product-item .product-details {
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .product-item h3 {
+            margin: 0;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .product-item p {
+            margin: 0;
+            color: #777;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .product-item .product-price {
+            color: rgb(236, 15, 15);
+            text-align: right;
+        }
+        
+        .product-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .not-found {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kết quả tìm kiếm</h1>
+
+    {% block content %}
+        {% if products %}
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-item">
+                        <a href="{% url 'product_detail' product.id %}">
+                            <img src="{{ product.profile_picture.url }}" alt="{{ product.name }}">
+                            <div class="product-details">
+                                <h3>{{ product.name }}</h3>
+                                <p style ="text-align: center" class="product-price">{{ product.price }} đ</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="not-found">Không tìm thấy sản phẩm phù hợp</p>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
